@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<title>Izabella — Application / Globe Studios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+  /* ---------- Base ---------- */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0E0E0E;
+    --paper: #FAFAF7;
+    --line: #0E0E0E;
+    --muted: #6B6B6B;
+  }
+
+  html, body {
+    background: #E5E5E0;
+    font-family: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ---------- A4 page ---------- */
+  .page {
+    width: 210mm;
+    height: 297mm;
+    margin: 24px auto;
+    background: var(--paper);
+    padding: 12mm 13mm 10mm 13mm;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+
+  /* ---------- Top utility bar (editorial labels) ---------- */
+  .utility {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 8.5pt;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .utility .left  { display: flex; gap: 18px; }
+  .utility .right { display: flex; gap: 18px; }
+  .utility span.dim { color: var(--muted); }
+
+  /* ---------- Address row (TO / FROM) ---------- */
+  .address {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    padding: 10px 0 0 0;
+    font-size: 8.5pt;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+  }
+  .address .col { display: flex; flex-direction: column; gap: 3px; }
+  .address .label {
+    font-size: 7.5pt;
+    letter-spacing: 0.20em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .address .value {
+    font-size: 9pt;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+    text-transform: none;
+    color: var(--ink);
+  }
+
+  /* ---------- Hero name ---------- */
+  .hero {
+    margin-top: 8mm;
+    margin-bottom: 5mm;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .hero h1 {
+    font-family: 'Archivo Black', 'Archivo', sans-serif;
+    font-size: 74pt;
+    line-height: 0.82;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .hero .hero-meta {
+    text-align: right;
+    font-size: 8pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.5;
+    padding-bottom: 8px;
+  }
+  .hero .hero-meta strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ---------- Subline below name ---------- */
+  .subline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 5px 0;
+    font-size: 8.5pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 5mm;
+  }
+  .subline .dot {
+    width: 6px; height: 6px;
+    background: var(--ink);
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 14px;
+    transform: translateY(-1px);
+  }
+
+  /* ---------- Body letter ---------- */
+  .letter {
+    columns: 2;
+    column-gap: 9mm;
+    column-rule: 1px solid #D5D5D0;
+    font-size: 8.6pt;
+    line-height: 1.5;
+    font-weight: 400;
+    letter-spacing: 0.005em;
+    color: var(--ink);
+    text-align: left;
+    hyphens: auto;
+    flex-grow: 1;
+  }
+
+  .letter .salutation {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 10.5pt;
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+    text-transform: none;
+    break-after: avoid;
+  }
+
+  .letter p {
+    margin-bottom: 5.5px;
+    break-inside: avoid-column;
+    orphans: 2;
+    widows: 2;
+  }
+
+  .letter p:last-of-type { margin-bottom: 0; }
+
+  .letter em {
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* ---------- Sign-off ---------- */
+  .signoff {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid var(--ink);
+    padding-top: 8px;
+    margin-top: 10px;
+  }
+  .signoff .sign-left {
+    font-size: 8pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .signoff .sign-right {
+    text-align: right;
+  }
+  .signoff .sign-right .yours {
+    font-size: 8.5pt;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .signoff .sign-right .name {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 22pt;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+
+  /* ---------- Print ---------- */
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  @media print {
+    html, body { background: #fff; }
+    .page {
+      margin: 0;
+      box-shadow: none;
+      width: 210mm;
+      height: 297mm;
+      page-break-after: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- TOP UTILITY -->
+  <div class="utility">
+    <div class="left">
+      <span>Ansøgning — d. 11.05.2026</span>
+    </div>
+    <div class="right">
+      <span>🌐</span>
+    </div>
+  </div>
+
+  <!-- ADDRESS GRID -->
+  <div class="address">
+    <div class="col">
+      <span class="label">Til</span>
+      <span class="value">Globe Studios</span>
+      <span class="value" style="color:var(--muted);">Ansættelsesteam</span>
+    </div>
+    <div class="col">
+      <span class="label">Fra</span>
+      <span class="value">Izabella</span>
+      <span class="value" style="color:var(--muted);">Kommunikation · PR · Content</span>
+    </div>
+    <div class="col" style="align-items:flex-end; text-align:right;">
+      <span class="label">Kontakt</span>
+      <span class="value">izabella.ringgaard@gmail.com</span>
+      <span class="value" style="color:var(--muted);">+45 42 21 87 67</span>
+    </div>
+  </div>
+
+  <!-- HERO NAME -->
+  <div class="hero">
+    <h1>Izabella</h1>
+    <div class="hero-meta">
+      <strong>Ansøgningen</strong><br>
+      Nr. 001 — Globe Studios<br>
+      <span style="color:var(--muted);">Unisex · Worldwide</span>
+    </div>
+  </div>
+
+  <!-- SUBLINE -->
+  <div class="subline">
+    <span>SoMe</span>
+    <span class="dot"></span>
+    <span>Content</span>
+    <span class="dot"></span>
+    <span>PR &amp; Influencer</span>
+    <span class="dot"></span>
+    <span>Brand &amp; Community</span>
+    <span class="dot"></span>
+    <span>Mode</span>
+  </div>
+
+  <!-- LETTER BODY -->
+  <div class="letter">
+
+    <p class="salutation">Kære Globe Studios,</p>
+
+    <p>Jeg tror sjældent, jeg har læst et opslag, der ramte så præcist ned i det, jeg gerne vil arbejde med: <em>SoMe, content, æstetik, organisk vækst, influenceraktivering, PR og fashion.</em> Det er netop det krydsfelt, jeg gerne vil arbejde i — og det er også dér, jeg allerede har haft hænderne nede i arbejdet: fra at bygge mit eget brand op på sociale medier til at arbejde med PR, events og influenceraktivering hos Nordisk Film og Lead Agency.</p>
+
+    <p>Jeg har længe haft øje på Globe Studios. Ikke kun fordi produkterne er virkelig lækre (!), men også fordi I har formået at bygge et brandunivers og et community, der føles genkendeligt, æstetisk stærkt og inspirerende. Og det må man sige, at I i den grad er lykkedes med — for Globe Studios bliver ved med at dukke op omkring mig: i gadebilledet, på sociale medier, hos influenter, på mine venner og ikke mindst i min egen garderobe.</p>
+
+    <p>Netop det at skabe et genkendeligt univers omkring et brand har jeg selv arbejdet med i praksis. I <em>Maanebarn Studio I/S</em>, som jeg byggede op fra bunden sammen med en veninde, var sociale medier en stor del af brandets organiske vækst. Vi arbejdede målrettet med at udvikle et visuelt udtryk, der kunne genkendes på tværs af platforme, og med indhold, der skulle inspirere, skabe interesse og gøre produkterne relevante for målgruppen. Vores organiske markedsføring var med til at skabe mere end 2.000 ordrer — og gav mig konkret erfaring med SoMe, influenceraktivering, webshopdesign, salg, brandidentitet og content-produktion.</p>
+
+    <p>I dag arbejder jeg som PR-juniorkonsulent hos <em>Lead Agency</em>, hvor jeg er fast tilknyttet Netflix-teamet og arbejder med pressearbejde, journalistkontakt og PR-aktiviteter. Derudover har jeg været med på kampagner og kommunikationsopgaver for blandt andet Handelsuddannelsen og Forskningens Døgn, hvor jeg har arbejdet med idéudvikling, tekstforfatning, kundemøder, taktiske spor, medieindrykninger og koordinering. Det har givet mig erfaring med at finde de rigtige vinkler, arbejde strategisk med kommunikation og få mange små dele til at lande i én samlet indsats. Selvom jeg er glad for mit arbejde, kilder det stadig i maven, når jeg tænker på fashionbranchen — derfor kunne jeg heller ikke lade være med at sende en ansøgning afsted til jer.</p>
+
+    <p>Min erfaring fra <em>Nordisk Film Distribution</em> har også været vigtig for min måde at arbejde med PR, events og aktiveringer på. Her arbejdede jeg med marketing, strategi og eventplanlægning omkring større filmlanceringer og fik et stort selvstændigt ansvar for at planlægge og afvikle gallapremierer — ofte med op til 1.000 gæster på tværs af branchefolk, samarbejdspartnere, presse, influenter og kendte. Jeg sad bl.a. med koordinering af gæstelister, presse, influenceraktivering, samarbejder og praktisk afvikling på dagen. Samtidig handlede arbejdet om at få filmens univers og instruktørens vision til at leve uden for biografsalen — så publikum kunne mærke fortællingen, allerede før filmen begyndte.</p>
+
+    <p>De erfaringer vil jeg virkelig gerne tage med ind hos Globe Studios. Jeg kan se mig selv arbejde med udvikling af content til Instagram og TikTok, idéer til kampagner og kollektioner, influencer- og creator outreach, PR og strategiske aktiveringer, der passer til jeres æstetik og målgruppe. Jeg arbejder hjemmevant i Canva og CapCut og har desuden taget kursus i Canva, som jeg bruger til at udvikle visuelt indhold til sociale medier, kampagner og digitale platforme.</p>
+
+    <p>Jeg tror, jeg ville passe godt ind hos jer, fordi jeg både forstår det kreative og det lavpraktiske. Jeg kan godt lide at få idéer — men jeg kan mindst lige så godt lide at få dem til at ske. At holde styr på contentplaner, deadlines, aftaler, visuelle detaljer og de små greb, der gør, at en aktivering eller et opslag lander rigtigt. Jeg trives med tempo, ansvar og en hverdag, hvor man skal kunne tænke selv, tage ejerskab og samarbejde. Og så synes jeg selv, at jeg har god energi — ligesom jer 😉</p>
+
+    <p>Jeg håber virkelig at høre fra jer.</p>
+
+  </div>
+
+  <!-- SIGN OFF -->
+  <div class="signoff">
+    <div class="sign-left"></div>
+    <div class="sign-right">
+      <div class="yours">De bedste hilsner,</div>
+      <div class="name">Izabella</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
